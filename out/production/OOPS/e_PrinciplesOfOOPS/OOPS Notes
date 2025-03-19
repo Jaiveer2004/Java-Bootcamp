@@ -1,0 +1,76 @@
+# OOP Principles in Java
+* Object-Oriented Programming (OOP) is a programming paradigm based on the concept of "objects," which encapsulate data (attributes) and behavior (methods). Java is a fully object-oriented language, and its design revolves around four core OOP principles. These principles help in writing modular, reusable, and maintainable code:
+
+1. Encapsulation:
+* Bundling data (fields) and methods that operate on that data into a single unit (class), while restricting direct access to some of the object's components.
+* Achieved using access modifiers (private, public, etc.) and getter/setter methods.
+
+2. Inheritance:
+* Allows one class (subclass) to inherit properties and behaviors (fields and methods) from another class (superclass), promoting code reuse and establishing a hierarchical relationship.
+
+3. Polymorphism:
+* Enables a single interface or method to represent different types or behaviors. It allows objects of different classes to be treated as objects of a common superclass.
+* Achieved through method overriding (runtime polymorphism) and method overloading (compile-time polymorphism).
+
+4. Abstraction:
+* Hides complex implementation details and exposes only the essential features of an object. It simplifies interaction with objects by providing a clear interface.
+* Achieved using abstract classes and interfaces.
+
+
+# Inheritance in Java
+* Inheritance is a mechanism in Java where one class (called the subclass or derived class) inherits the fields and methods of another class (called the superclass or base class).
+* It enables code reusability and establishes an "is-a" relationship between classes (e.g., a "Dog" is-a "Animal").
+
+Syntax:
+Inheritance is implemented using the "extend" keyword.
+class Superclass {
+    // Fields and methods
+}
+
+class Subclass extends Superclass {
+    // Additional fields and methods
+}
+
+Here, Subclass becomes a child class of Superclass.
+Parent : Superclass
+Child : Subclass
+
+Example of Inheritance:
+class Animal {
+    String name;
+
+    Animal(String name) {
+        this.name = name;
+    }
+
+    void eat() {
+        System.out.println(name + " is eating.");
+    }
+}
+
+class Dog extends Animal {
+    Dog(String name) {
+        super(name); // Call superclass constructor
+    }
+
+    void bark() {
+        System.out.println(name + " is barking.");
+    }
+}
+
+public class InheritanceExample {
+    public static void main(String[] args) {
+        Dog dog = new Dog("Buddy");
+        dog.eat();  // Inherited from Animal
+        dog.bark(); // Defined in Dog
+    }
+}
+Explanation:
+1. Animal is a Parent Class.
+2. Class Dog extends from parent class Animal and "Dog" becomes child class of parent class "Animal"
+3. All the methods of the Animal class would be available for the Dog class.
+4. In the main function, we have called "eat" method of the Dog class which it has inherited from the Animal Class, It would give output : Dog is eating
+
+
+# Important Concepts in Inheritance:
+1. "super" keyword: 

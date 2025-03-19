@@ -1,0 +1,308 @@
+# OOP Principles in Java
+* Object-Oriented Programming (OOP) is a programming paradigm based on the concept of "objects," which encapsulate data (attributes) and behavior (methods). Java is a fully object-oriented language, and its design revolves around four core OOP principles. These principles help in writing modular, reusable, and maintainable code:
+
+1. Encapsulation:
+* Bundling data (fields) and methods that operate on that data into a single unit (class), while restricting direct access to some of the object's components.
+* Achieved using access modifiers (private, public, etc.) and getter/setter methods.
+
+2. Inheritance:
+* Allows one class (subclass) to inherit properties and behaviors (fields and methods) from another class (superclass), promoting code reuse and establishing a hierarchical relationship.
+
+3. Polymorphism:
+* Enables a single interface or method to represent different types or behaviors. It allows objects of different classes to be treated as objects of a common superclass.
+* Achieved through method overriding (runtime polymorphism) and method overloading (compile-time polymorphism).
+
+4. Abstraction:
+* Hides complex implementation details and exposes only the essential features of an object. It simplifies interaction with objects by providing a clear interface.
+* Achieved using abstract classes and interfaces.
+
+
+# Inheritance in Java
+* Inheritance is a mechanism in Java where one class (called the subclass or derived class) inherits the fields and methods of another class (called the superclass or base class).
+* It enables code reusability and establishes an "is-a" relationship between classes (e.g., a "Dog" is-a "Animal").
+
+Syntax:
+Inheritance is implemented using the "extend" keyword.
+class Superclass {
+    // Fields and methods
+}
+
+class Subclass extends Superclass {
+    // Additional fields and methods
+}
+
+Here, Subclass becomes a child class of Superclass.
+Parent : Superclass
+Child : Subclass
+
+Example of Inheritance:
+class Animal {
+    String name;
+
+    Animal(String name) {
+        this.name = name;
+    }
+
+    void eat() {
+        System.out.println(name + " is eating.");
+    }
+}
+
+class Dog extends Animal {
+    Dog(String name) {
+        super(name); // Call superclass constructor
+    }
+
+    void bark() {
+        System.out.println(name + " is barking.");
+    }
+}
+
+public class InheritanceExample {
+    public static void main(String[] args) {
+        Dog dog = new Dog("Buddy");
+        dog.eat();  // Inherited from Animal
+        dog.bark(); // Defined in Dog
+    }
+}
+Explanation:
+1. Animal is a Parent Class.
+2. Class Dog extends from parent class Animal and "Dog" becomes child class of parent class "Animal"
+3. All the methods of the Animal class would be available for the Dog class.
+4. In the main function, we have called "eat" method of the Dog class which it has inherited from the Animal Class, It would give output : Dog is eating
+
+
+# Important Concepts in Inheritance:
+1. "super" keyword:
+* It is a reference variable that is used to refer to the immediate parent class (superclass) of a subclass.
+* It mainly has three uses:
+    - Calling the Superclass Constructor
+    - Accessing Superclass Methods
+    - Accessing Superclass Fields
+
+- Calling the Superclass Constructor
+Example:
+
+class Animal {
+    String name;
+
+    Animal(String name) {
+        this.name = name;
+        System.out.println("Animal constructor called");
+    }
+}
+
+class Dog extends Animal {
+    Dog(String name) {
+        super(name); // Calls Animal's constructor
+        System.out.println("Dog constructor called");
+    }
+}
+
+public class SuperConstructorExample {
+    public static void main(String[] args) {
+        Dog dog = new Dog("Buddy");
+        System.out.println("Dog's name: " + dog.name);
+    }
+}
+
+Explanation: When super is used in the child class, it invokes the constructor of the parent class.
+NOTE : If parent class doesn't consist of a constructor which takes no parameters, a compilation error will occur.
+
+- Accessing Superclass Methods
+Example:
+class Animal {
+    void sound() {
+        System.out.println("Some generic animal sound");
+    }
+}
+
+class Dog extends Animal {
+    void sound() {
+        super.sound(); // Calls superclass method
+        System.out.println("Woof");
+    }
+}
+
+public class SuperMethodExample {
+    public static void main(String[] args) {
+        Dog dog = new Dog();
+        dog.sound();
+    }
+}
+Explanation: Here, when super keyword is used in the child class, it calls the method of the parent Class.
+So, super is also used to call the method of the parent class.
+
+By same way, we can also use variables of the parent class in the child class using the super keyword.
+In the Box class, suppose we have a same name variable as in BoxWeight : weight
+Now, if we want to access Superclass weight from the subclass, we can use the super keyword
+
+We have two classes : Box and BoxWeight
+
+Box:
+public class Box {
+    double l;
+    double b;
+    double h;
+
+    Box() {
+
+    }
+
+    // Cube
+    Box(double side) {
+        this.l = side;
+        this.b = side;
+        this.h = side;
+    }
+
+    // Rectangle
+    Box(double l, double b, double h) {
+        this.l = l;
+        this.b = b;
+        this.h = h;
+    }
+
+    // Copy Constructor
+    Box(Box old) {
+        this.l = old.l;
+        this.b = old.b;
+        this.h = old.h;
+    }
+
+    public void showInfo() {
+        System.out.println("This is a message for showing info.");
+    }
+}
+
+BoxWeight:
+public class BoxWeight extends Box{
+    double weight;
+
+    public BoxWeight() {
+        this.weight = -1;
+    }
+
+    public BoxWeight(double l, double b, double h, double w) {
+        super(l, b, h); // Used to call the constructor of the parent class.
+        // But it can't access the member variables that are private in parent class.
+
+        this.weight = w;
+    }
+}
+
+Here, are two classes:
+1. Box : A superclass that represents a box with dimensions (l for length, b for breadth, h for height).
+2. BoxWeight : A subclass that extends Box and adds a weight field.
+
+Now, if we define a new object in the Main function as:
+Box b2 = new BoxWeight(25.0, 25.0, 25.0, 25.0);
+
+Step by step Explanation and flow of code:
+1. The new keyword creates an object of the "BoxWeight" class. (This is created in Heap Memory)
+2. A reference variable b2 of type "Box" is created. (This is created in Stack Memory)
+3. The ref variable b2 points towards "BoxWeight" object.
+4. When object is being created, the constructor of BoxWeight gets initialized and values are stored.
+5. Inside this constructor:
+   super(l, b, h): This calls the superclass (Box) constructor Box(double l, double b, double h) with arguments 25.0, 25.0, 25.0.
+   In the Box class, this constructor initializes:
+   this.l = 25.0
+   this.b = 25.0
+   this.h = 25.0
+   this.weight = w: After the superclass constructor finishes, the weight field of BoxWeight is set to 25.0.
+6. Result: A BoxWeight object is created with:
+   l = 25.0 (inherited from Box)
+   b = 25.0 (inherited from Box)
+   h = 25.0 (inherited from Box)
+   weight = 25.0 (specific to BoxWeight)
+
+In Java, a superclass reference can point to an object of its subclass due to polymorphism. This is called an "is-a" relationship: a BoxWeight "is-a" Box.
+So, b2 is a reference of type Box, but it points to an object of type BoxWeight.
+
+
+Now, what does this newly created object of BoxWeight see which is referred by the Box b2.
+As (l, b, h) are member variables of the Superclass. So, it can only see these variables.
+While (w) which is a member variable of the Child Class, can't be seen by the object created.
+
+So, if we try to access :
+
+System.out.println(b2.w);
+This would result in an error.
+
+Which principles are applied on this example:
+1. Inheritance:
+    BoxWeight extends Box, inheriting its fields (l, b, h) and methods (showInfo()).
+    The super(l, b, h) call in BoxWeight’s constructor ensures the Box portion of the object is properly initialized.
+
+2. Polymorphism:
+    The reference Box b2 can hold a BoxWeight object because BoxWeight is a subclass of Box.
+    This allows flexibility: you can write code that works with Box types and still handle BoxWeight objects (or other subclasses) without modification.
+
+3. Encapsulation (Implied):
+    While the fields l, b, h, and weight are currently public (default package access), in a real-world scenario, they’d typically be private with getters/setters to enforce encapsulation. The super keyword respects this by only accessing what’s available through the superclass’s public/protected interface.
+
+Now, consider this example:
+BoxWeight b2 = new Box(25.0, 25.0, 25.0);
+
+This would result in an error, as Box doesn't know about the (w) as it is member variable of the subclass.
+
+Downward motion is allowed while upward is not allowed. (Hassan valli gl ni hai)
+
+What does super refer to:
+
+We have structure of classes like this:
+
+        Grandparent class ----> Parent Class ---> Child Class ---> Grandchild Class
+
+When super is used in Parent Class : It refers to the Grandparent Class
+When super is used in Child Class : It refers to the Parent Class
+When super is used in Grandchild Class : It refers to the Child Class
+
+What if super is called in a class which is not inherited from any class?
+* According to internal implementation of class, all the classes have "Object" class as a superclass of it.
+* Every class has {@code Object} as a superclass. All objects, including arrays, implement the methods of this class.
+
+Now, lets get to type of inheritance:
+
+1. Single Inheritance:
+    - One class extends another class
+    - Example: Box extends BoxWeight
+
+2. Multilevel Inheritance:
+    - Multiple levels of Inheritance.
+    - Structure: Grandparent class ----> Parent Class ---> Child Class ---> Grandchild Class
+    - Example: Box extends BoxWeight, BoxWeight extends BoxPrice
+
+3. Multiple Inheritance:
+    - Multiple classes are extending more than one class.
+    - Structure:
+                    Male Class    -----
+                                      | ----- Child Class
+                    Female Class  -----
+    - Example:
+    A extends C
+    B extends C
+
+    Question : If A has a variable n = 10 and B has a variable n = 15. We make a new object of C and try to access the variable n. Which value would show up?
+    Answer : This is a problem in Java, because of which Multiple Inheritance does not exists in JAVA.
+
+Multiple Inheritance is not supported by JAVA.
+If we want to access multiple parent classes, we can use "Interfaces" in Java.
+
+4. Hierarchical Inheritance :
+    - One class is inherited by many classes.
+    - Structure : X extends A, X extends B, X extends C
+
+5. Hybrid Inheritance :
+    - Combination of Single and Multiple Inheritance.
+    - Structure : A extends B, A extends C; B extends D, C extends D (making a loop)
+    - Since, Multiple Inheritance does not exists in Java. So, it also does not exist.
+    - Interface is used for the same
+
+
+# Polymorphism: Poly -> Many, morphism: ways to represent : Many ways to represent a single entity or object
+
+In Java, polymorphism is closely tied to inheritance and is achieved in two primary ways:
+
+1. Compile-Time Polymorphism (Static Polymorphism): Resolved at compile time (e.g., method overloading).
+2. Run-Time Polymorphism (Dynamic Polymorphism): Resolved at runtime (e.g., method overriding).
