@@ -1,0 +1,499 @@
+# OOP Principles in Java
+* Object-Oriented Programming (OOP) is a programming paradigm based on the concept of "objects," which encapsulate data (attributes) and behavior (methods). Java is a fully object-oriented language, and its design revolves around four core OOP principles. These principles help in writing modular, reusable, and maintainable code:
+
+1. Encapsulation:
+* Bundling data (fields) and methods that operate on that data into a single unit (class), while restricting direct access to some of the object's components.
+* Achieved using access modifiers (private, public, etc.) and getter/setter methods.
+
+2. Inheritance:
+* Allows one class (subclass) to inherit properties and behaviors (fields and methods) from another class (superclass), promoting code reuse and establishing a hierarchical relationship.
+
+3. Polymorphism:
+* Enables a single interface or method to represent different types or behaviors. It allows objects of different classes to be treated as objects of a common superclass.
+* Achieved through method overriding (runtime polymorphism) and method overloading (compile-time polymorphism).
+
+4. Abstraction:
+* Hides complex implementation details and exposes only the essential features of an object. It simplifies interaction with objects by providing a clear interface.
+* Achieved using abstract classes and interfaces.
+
+
+# Inheritance in Java
+* Inheritance is a mechanism in Java where one class (called the subclass or derived class) inherits the fields and methods of another class (called the superclass or base class).
+* It enables code reusability and establishes an "is-a" relationship between classes (e.g., a "Dog" is-a "Animal").
+
+Syntax:
+Inheritance is implemented using the "extend" keyword.
+class Superclass {
+    // Fields and methods
+}
+
+class Subclass extends Superclass {
+    // Additional fields and methods
+}
+
+Here, Subclass becomes a child class of Superclass.
+Parent : Superclass
+Child : Subclass
+
+Example of Inheritance:
+class Animal {
+    String name;
+
+    Animal(String name) {
+        this.name = name;
+    }
+
+    void eat() {
+        System.out.println(name + " is eating.");
+    }
+}
+
+class Dog extends Animal {
+    Dog(String name) {
+        super(name); // Call superclass constructor
+    }
+
+    void bark() {
+        System.out.println(name + " is barking.");
+    }
+}
+
+public class InheritanceExample {
+    public static void main(String[] args) {
+        Dog dog = new Dog("Buddy");
+        dog.eat();  // Inherited from Animal
+        dog.bark(); // Defined in Dog
+    }
+}
+Explanation:
+1. Animal is a Parent Class.
+2. Class Dog extends from parent class Animal and "Dog" becomes child class of parent class "Animal"
+3. All the methods of the Animal class would be available for the Dog class.
+4. In the main function, we have called "eat" method of the Dog class which it has inherited from the Animal Class, It would give output : Dog is eating
+
+
+# Important Concepts in Inheritance:
+1. "super" keyword:
+* It is a reference variable that is used to refer to the immediate parent class (superclass) of a subclass.
+* It mainly has three uses:
+    - Calling the Superclass Constructor
+    - Accessing Superclass Methods
+    - Accessing Superclass Fields
+
+- Calling the Superclass Constructor
+Example:
+
+class Animal {
+    String name;
+
+    Animal(String name) {
+        this.name = name;
+        System.out.println("Animal constructor called");
+    }
+}
+
+class Dog extends Animal {
+    Dog(String name) {
+        super(name); // Calls Animal's constructor
+        System.out.println("Dog constructor called");
+    }
+}
+
+public class SuperConstructorExample {
+    public static void main(String[] args) {
+        Dog dog = new Dog("Buddy");
+        System.out.println("Dog's name: " + dog.name);
+    }
+}
+
+Explanation: When super is used in the child class, it invokes the constructor of the parent class.
+NOTE : If parent class doesn't consist of a constructor which takes no parameters, a compilation error will occur.
+
+- Accessing Superclass Methods
+Example:
+class Animal {
+    void sound() {
+        System.out.println("Some generic animal sound");
+    }
+}
+
+class Dog extends Animal {
+    void sound() {
+        super.sound(); // Calls superclass method
+        System.out.println("Woof");
+    }
+}
+
+public class SuperMethodExample {
+    public static void main(String[] args) {
+        Dog dog = new Dog();
+        dog.sound();
+    }
+}
+Explanation: Here, when super keyword is used in the child class, it calls the method of the parent Class.
+So, super is also used to call the method of the parent class.
+
+By same way, we can also use variables of the parent class in the child class using the super keyword.
+In the Box class, suppose we have a same name variable as in BoxWeight : weight
+Now, if we want to access Superclass weight from the subclass, we can use the super keyword
+
+We have two classes : Box and BoxWeight
+
+Box:
+public class Box {
+    double l;
+    double b;
+    double h;
+
+    Box() {
+
+    }
+
+    // Cube
+    Box(double side) {
+        this.l = side;
+        this.b = side;
+        this.h = side;
+    }
+
+    // Rectangle
+    Box(double l, double b, double h) {
+        this.l = l;
+        this.b = b;
+        this.h = h;
+    }
+
+    // Copy Constructor
+    Box(Box old) {
+        this.l = old.l;
+        this.b = old.b;
+        this.h = old.h;
+    }
+
+    public void showInfo() {
+        System.out.println("This is a message for showing info.");
+    }
+}
+
+BoxWeight:
+public class BoxWeight extends Box{
+    double weight;
+
+    public BoxWeight() {
+        this.weight = -1;
+    }
+
+    public BoxWeight(double l, double b, double h, double w) {
+        super(l, b, h); // Used to call the constructor of the parent class.
+        // But it can't access the member variables that are private in parent class.
+
+        this.weight = w;
+    }
+}
+
+Here, are two classes:
+1. Box : A superclass that represents a box with dimensions (l for length, b for breadth, h for height).
+2. BoxWeight : A subclass that extends Box and adds a weight field.
+
+Now, if we define a new object in the SinglyLL.Main function as:
+Box b2 = new BoxWeight(25.0, 25.0, 25.0, 25.0);
+
+Step by step Explanation and flow of code:
+1. The new keyword creates an object of the "BoxWeight" class. (This is created in Heap Memory)
+2. A reference variable b2 of type "Box" is created. (This is created in Stack Memory)
+3. The ref variable b2 points towards "BoxWeight" object.
+4. When object is being created, the constructor of BoxWeight gets initialized and values are stored.
+5. Inside this constructor:
+   super(l, b, h): This calls the superclass (Box) constructor Box(double l, double b, double h) with arguments 25.0, 25.0, 25.0.
+   In the Box class, this constructor initializes:
+   this.l = 25.0
+   this.b = 25.0
+   this.h = 25.0
+   this.weight = w: After the superclass constructor finishes, the weight field of BoxWeight is set to 25.0.
+6. Result: A BoxWeight object is created with:
+   l = 25.0 (inherited from Box)
+   b = 25.0 (inherited from Box)
+   h = 25.0 (inherited from Box)
+   weight = 25.0 (specific to BoxWeight)
+
+In Java, a superclass reference can point to an object of its subclass due to polymorphism. This is called an "is-a" relationship: a BoxWeight "is-a" Box.
+So, b2 is a reference of type Box, but it points to an object of type BoxWeight.
+
+
+Now, what does this newly created object of BoxWeight see which is referred by the Box b2.
+As (l, b, h) are member variables of the Superclass. So, it can only see these variables.
+While (w) which is a member variable of the Child Class, can't be seen by the object created.
+
+So, if we try to access :
+
+System.out.println(b2.w);
+This would result in an error.
+
+Which principles are applied on this example:
+1. Inheritance:
+    BoxWeight extends Box, inheriting its fields (l, b, h) and methods (showInfo()).
+    The super(l, b, h) call in BoxWeight’s constructor ensures the Box portion of the object is properly initialized.
+
+2. Polymorphism:
+    The reference Box b2 can hold a BoxWeight object because BoxWeight is a subclass of Box.
+    This allows flexibility: you can write code that works with Box types and still handle BoxWeight objects (or other subclasses) without modification.
+
+3. Encapsulation (Implied):
+    While the fields l, b, h, and weight are currently public (default package access), in a real-world scenario, they’d typically be private with getters/setters to enforce encapsulation. The super keyword respects this by only accessing what’s available through the superclass’s public/protected interface.
+
+Now, consider this example:
+BoxWeight b2 = new Box(25.0, 25.0, 25.0);
+
+This would result in an error, as Box doesn't know about the (w) as it is member variable of the subclass.
+
+Downward motion is allowed while upward is not allowed. (Hassan valli gl ni hai)
+
+What does super refer to:
+
+We have structure of classes like this:
+
+        Grandparent class ----> Parent Class ---> Child Class ---> Grandchild Class
+
+When super is used in Parent Class : It refers to the Grandparent Class
+When super is used in Child Class : It refers to the Parent Class
+When super is used in Grandchild Class : It refers to the Child Class
+
+What if super is called in a class which is not inherited from any class?
+* According to internal implementation of class, all the classes have "Object" class as a superclass of it.
+* Every class has {@code Object} as a superclass. All objects, including arrays, implement the methods of this class.
+
+Now, lets get to type of inheritance:
+
+1. Single Inheritance:
+    - One class extends another class
+    - Example: Box extends BoxWeight
+
+2. Multilevel Inheritance:
+    - Multiple levels of Inheritance.
+    - Structure: Grandparent class ----> Parent Class ---> Child Class ---> Grandchild Class
+    - Example: Box extends BoxWeight, BoxWeight extends BoxPrice
+
+3. Multiple Inheritance:
+    - Multiple classes are extending more than one class.
+    - Structure:
+                    Male Class    -----
+                                      | ----- Child Class
+                    Female Class  -----
+    - Example:
+    A extends C
+    B extends C
+
+    Question : If A has a variable n = 10 and B has a variable n = 15. We make a new object of C and try to access the variable n. Which value would show up?
+    Answer : This is a problem in Java, because of which Multiple Inheritance does not exists in JAVA.
+
+Multiple Inheritance is not supported by JAVA.
+If we want to access multiple parent classes, we can use "Interfaces" in Java.
+
+4. Hierarchical Inheritance :
+    - One class is inherited by many classes.
+    - Structure : X extends A, X extends B, X extends C
+
+5. Hybrid Inheritance :
+    - Combination of Single and Multiple Inheritance.
+    - Structure : A extends B, A extends C; B extends D, C extends D (making a loop)
+    - Since, Multiple Inheritance does not exists in Java. So, it also does not exist.
+    - Interface is used for the same
+
+
+# Polymorphism: Poly -> Many, morphism: ways to represent : Many ways to represent a single entity or object
+Analogy: Think of a remote control. Pressing "play" works differently for a DVD player, a music app, or a game—it’s the same button but different results!
+
+In Java, polymorphism is closely tied to inheritance and is achieved in two primary ways:
+
+1. Compile-Time Polymorphism (Static Polymorphism): Resolved at compile time (e.g., method overloading).
+    * Resolved during compilation (when the code is turned into bytecode).
+    * Achieved through method overloading and operator overloading (though Java doesn’t fully support the latter).
+
+2. Run-Time Polymorphism (Dynamic Polymorphism): Resolved at runtime (e.g., method overriding).
+    * Resolved during execution (when the program runs).
+    * Achieved through method overriding using inheritance.
+
+## Compile-Time Polymorphism / Static Polymorphism:
+* What It Is: When a class has multiple methods with the same name but different parameters (number, type, or order).
+* How It Works: The compiler decides which method to call based on the arguments you pass.
+* Analogy: Like ordering food—you say "pizza," but the chef picks the recipe based on toppings (pepperoni vs. cheese).
+
+* Example of Method Overloading:
+class Calculator {
+    // Method 1: Add two integers
+    int add(int a, int b) {
+        return a + b;
+    }
+
+    // Method 2: Add three integers
+    int add(int a, int b, int c) {
+        return a + b + c;
+    }
+
+    // Method 3: Add two doubles
+    double add(double a, double b) {
+        return a + b;
+    }
+}
+
+public class SinglyLL.Main {
+    public static void main(String[] args) {
+        Calculator calc = new Calculator();
+        System.out.println(calc.add(5, 3));        // Calls int add(int, int) -> 8
+        System.out.println(calc.add(5, 3, 2));     // Calls int add(int, int, int) -> 10
+        System.out.println(calc.add(5.5, 3.2));    // Calls double add(double, double) -> 8.7
+    }
+}
+* Explanation: The compiler picks the right add method based on the number and type of arguments. This happens at compile time—static!
+
+## Run-Time Polymorphism / Dynamic Polymorphism: (Method Overriding)
+* What It Is: When a subclass provides a specific implementation of a method that’s already defined in its superclass.
+* How It Works: The method to call is decided at runtime based on the actual object type, not the reference type.
+* Analogy: Imagine a family rule: "Greet guests." The parent says "Hello," but the kid says "Yo, what’s up?" Same rule, different style!
+* Key Features:
+    - Requires inheritance (a parent-child class relationship).
+    - Method in the subclass must have the same name, return type, and parameters as the superclass method.
+    - Uses the @Override annotation (optional but recommended) to mark it.
+
+* Example of Method Overriding:
+class Animal {
+    void sound() {
+        System.out.println("Some generic animal sound");
+    }
+}
+
+class Dog extends Animal {
+    @Override
+    void sound() {
+        System.out.println("Woof Woof");
+    }
+}
+
+class Cat extends Animal {
+    @Override
+    void sound() {
+        System.out.println("Meow");
+    }
+}
+
+public class SinglyLL.Main {
+    public static void main(String[] args) {
+        Animal myAnimal; // Reference type is Animal
+
+        myAnimal = new Dog();   // Actual object is Dog
+        myAnimal.sound();       // Output: Woof Woof
+
+        myAnimal = new Cat();   // Actual object is Cat
+        myAnimal.sound();       // Output: Meow
+    }
+}
+
+Explanation: Even though myAnimal is an Animal reference, the actual object (Dog or Cat) decides which sound() runs. This is resolved at runtime—dynamic!
+
+Method Overriding in more detail:
+* Relies on dynamic method dispatch, which is implemented using a mechanism called the Virtual Method Table (vtable) in the Java Virtual Machine (JVM). Let’s break down how this works internally:
+
+
+# Key Concepts in Polymorphism:
+1. Upcasting:
+        - What: Using a parent name (like Animal) to hold a child object (like Dog).
+        - Why: Lets you treat all animals the same, but they act their own way.
+        - Example: Animal pet = new Dog(); — it’s a dog in disguise!
+            Animal animal = new Dog(); // Upcasting
+            animal.sound();            // Calls Dog's sound() due to overriding
+            // animal.bark();          // Error: bark() is not in Animal
+
+2. Downcasting:
+        - Converting a superclass reference back to a subclass type to access subclass-specific members.
+        - Requires explicit casting and can throw ClassCastException if the object isn’t of the expected subclass.
+        - Example:
+            Animal animal = new Dog();
+            Dog dog = (Dog) animal; // Downcasting
+            dog.sound();            // Output: Woof
+
+# Dynamic Method Dispatch:
+
+
+Example combining Overloading and Overriding:
+
+class Bike {
+    void ride() {
+        System.out.println("Riding a bike...");
+    }
+}
+
+class SuperBike extends Bike {
+    void ride() {                    // Overrides
+        System.out.println("Zooming fast!");
+    }
+    void ride(String gear) {         // Overloads
+        System.out.println("Riding with " + gear);
+    }
+}
+
+public class SinglyLL.Main {
+    public static void main(String[] args) {
+        Bike b = new SuperBike();
+        b.ride();             // Output: Zooming fast!
+
+        SuperBike sb = new SuperBike();
+        sb.ride("high gear"); // Output: Riding with high gear
+    }
+}
+
+* Overriding: ride() changes from "Riding..." to "Zooming fast!"
+* Overloading: ride("high gear") adds a new option.
+
+## Abstraction:
+- It refers to the process of hiding complex implementation details and exposing only the essential features or functionalities of an object to the user.
+- Abstraction allows developers to focus on what an object does rather than how it does it, simplifying interaction with complex systems and improving code maintainability.
+- In Java, abstraction is achieved primarily through abstract classes and interfaces. These mechanisms allow you to define a blueprint or contract for classes without specifying the full implementation, leaving it to subclasses or implementing classes to provide the details.
+
+# Abstract Class:
+- Definition:
+    * An abstract class is a class that cannot be instantiated directly (i.e., you can’t create objects of it using new AbstractClass()).
+    * It is declared with the abstract keyword.
+    * It may contain a mix of:
+        1. Abstract methods (without implementation).
+        2. Concrete methods (with implementation).
+        3. Fields (instance variables).
+        4. Constructors.
+
+- Syntax:
+
+abstract class ClassName {
+    // Fields
+    int field;
+
+    // Constructor
+    ClassName() {
+        // Initialization
+    }
+
+    // Concrete method
+    void concreteMethod() {
+        // Implementation
+    }
+
+    // Abstract method
+    abstract void abstractMethod();
+}
+
+- Key Features
+* Designed to be extended by subclasses.
+* Can include both abstract and non-abstract methods.
+* Provides a partial implementation that subclasses can build upon.
+* Cannot be final (since final prevents inheritance, which contradicts the purpose of an abstract class).
+
+
+# Abstract Methods:
+- Definition:
+    * An abstract method is a method declared in a class without an implementation (i.e., no method body). It ends with a semicolon (;) instead of curly braces ({}).
+    * It is marked with the abstract keyword.
+    * The purpose is to define a contract or behavior that subclasses must implement.
+
+- Key Features:
+    * Can only exist in an abstract class or an interface.
+    * Forces subclasses to provide their own implementation (unless the subclass is also abstract).
+    * Cannot be private (since it’s meant to be overridden, it must be accessible).
+    * Can be public, protected, or default (package-private).

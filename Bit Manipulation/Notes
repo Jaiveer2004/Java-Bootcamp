@@ -1,0 +1,39 @@
+# What is Bit Manipulation?
+At its core, bit manipulation works with the individual bits (0s and 1s) of a number’s binary representation. In Java, integers (int) are 32 bits, and long integers (long) are 64 bits. By using bitwise operators, you can perform operations like setting, clearing, or toggling specific bits.
+
+# Bitwise Operators in JAVA:
+
+1.  AND '&' :
+        1 & 1 = 1
+        0 & 1 = 0
+        1 & 0 = 0
+        0 & 0 = 0
+
+2. OR '|' :
+        0 | 0 = 0
+        1 | 1 = 1
+        0 | 1 = 1
+        1 | 0 = 1
+
+3. XOR '^' : 1 for Different, 0 for same.
+        0 ^ 0 = 0
+        1 ^ 1 = 0
+
+        0 ^ 1 = 1
+        1 ^ 0 = 1
+        n ^ 0 = n
+
+4. NOT '~' : Complement
+        ~ 0 = 1
+        ~ 1 = 0
+
+Most Significant Bit (MSB): Rightmost bit
+Least Significant Bit (LSB): Leftmost bit
+
+5. Left Shift '<<': Remove LSB and add zero at MSB
+        5 << 1 : This firstly converts 5 to binary and then apply Left Shift
+        0101 >> 1 = 1010 : 10 (in decimal)
+
+6. Right Shift '>>' : Remove MSB and add zero at LSB
+        5 >> 1 : This firstly converts 5 to binary and then apply Left Shift
+        0101 << 1 = 0010 : 2 (in decimal)

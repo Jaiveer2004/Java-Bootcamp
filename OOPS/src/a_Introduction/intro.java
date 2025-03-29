@@ -7,8 +7,6 @@ public class intro {
         System.out.println(student1.rno);
         System.out.println(student1.Name);
         System.out.println(student1.marks);
-
-
     }
 }
 
